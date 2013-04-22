@@ -1,18 +1,34 @@
 filetype off
-call pathogen#infect()
+execute pathogen#infect()
+syntax on
 filetype plugin indent on
 
-" set modelines=0
+" no need to be vi compatible
+set nocompatible
+
+" set up color scheme
+colorscheme default
+set t_Co=256
+
+" prevents security exploits
+set modelines=0
 
 " Sane spacing and tabs
 set tabstop=2
-set smarttab
 set shiftwidth=2
-set autoindent
+set softtabstop=2
 set expandtab
 
+" Clear old autocmds in group so we don't get warnings on reloading vimrc
+"autocmd!
+
+"General behavior
+"behave xterm
+
+" make life a little easier
 set encoding=utf-8
 set scrolloff=3
+set autoindent
 set showmode
 set showcmd
 set hidden
@@ -23,16 +39,34 @@ set noerrorbells
 set cursorline
 set ttyfast
 set ruler
+set autoread
+set dictionary="/usr/dict/words"
+set history=100
+set nofoldenable
+set complete-=i
+set timeoutlen=3000
+set ttimeoutlen=50
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set backspace=indent,eol,start
 set laststatus=2
-"set statusline=%<%f\ %h%m%r%{rvm#statusline()}%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %y\ %h%m%r%#warningmsg#%*%=%-14.(%l,%c%V%)\ %P
+"set statusline=%<%f\ %h%m%r%#warningmsg#%{SyntasticStatusLineFlag()}%*%=%-14.(%l,%c%V%)\ %P
 set relativenumber
-highlight LineNr term=bold cterm=NONE ctermfg=Yellow ctermbg=NONE gui=NONE guifg=Yellow guibg=NONE
+highlight LineNr term=bold cterm=NONE ctermfg=darkred ctermbg=NONE gui=NONE guifg=darkred guibg=NONE
+highlight ExtraWhitespace ctermbg=darkgreen  guifg=darkgreen
 set undofile
 
 "remap leader key to comma from \\
 let mapleader = ","
 
+
+" window behavior
+set splitbelow
+set splitright
+set winminheight=1
+
+" search stuff
 nnoremap / /\v
 vnoremap / /\v
 set ignorecase
@@ -45,6 +79,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 
+" some convenience remaps
 nnoremap j gj
 nnoremap k gk
 inoremap jj <ESC>
@@ -57,9 +92,12 @@ nnoremap <C-l> <C-w>l
 nnoremap <leader>w <C-w>v<C-w>l
 
 " get rid of the help key
-" inoremap <F1> <ESC>
-" nnoremap <F1> <ESC>
-" vnoremap <F1> <ESC>
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" save having to hit the shift key for :
+nnoremap ; :
 
 set wrap
 set textwidth=79
@@ -68,6 +106,13 @@ set colorcolumn=85
 
 set list
 set listchars=tab:▸\ ,eol:¬
+
+" Source the vimrc file after saving it
+"if has("autocmd")
+"  autocmd bufwritepost $HOME/.vim/vimrc source $HOME/.vim/vimrc
+"  autocmd bufwritepost $HOME/.vimrc source $HOME/.vim/vimrc
+"endif
+
 
 """""""" NERDTree:
 map <leader>dc :NERDTreeClose<cr>
