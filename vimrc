@@ -99,6 +99,12 @@ vnoremap <F1> <ESC>
 " save having to hit the shift key for :
 nnoremap ; :
 
+"tabs
+nnoremap th :tabprevious<CR>
+nnoremap tl :tabnext<CR>
+nnoremap td :tabclose<CR>
+nnoremap tn :tabnew<CR>
+
 set wrap
 set textwidth=79
 set formatoptions=qrn1
