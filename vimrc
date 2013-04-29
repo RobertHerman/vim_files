@@ -113,6 +113,11 @@ set colorcolumn=85
 set list
 set listchars=tab:▸\ ,eol:¬
 
+" allow me to create a note quickly
+" broken
+"map <leader>n :sp ~/notes/stream-`date '+\%Y\%m\%d\%H\%M\%S'`.txt<CR><esc>:!ln -s % ~/notes/latest.txt<CR><leader>h
+"map <leader>h i<cr><esc>30i-<esc>a><esc> :r!date +'\%A \%v \%r'<cr>kJk<esc>64i=<esc>yypO
+
 " Source the vimrc file after saving it
 "if has("autocmd")
 "  autocmd bufwritepost $HOME/.vim/vimrc source $HOME/.vim/vimrc
