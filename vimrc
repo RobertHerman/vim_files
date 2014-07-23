@@ -52,7 +52,8 @@ set backspace=indent,eol,start
 set laststatus=2
 set statusline=%<%f\ %y\ %h%m%r%#warningmsg#%*%=%-14.(%l,%c%V%)\ %P
 "set statusline=%<%f\ %h%m%r%#warningmsg#%{SyntasticStatusLineFlag()}%*%=%-14.(%l,%c%V%)\ %P
-set relativenumber
+"set relativenumber
+set number
 highlight LineNr term=bold cterm=NONE ctermfg=darkred ctermbg=NONE gui=NONE guifg=darkred guibg=NONE
 highlight ExtraWhitespace ctermbg=darkgreen  guifg=darkgreen
 set undofile
@@ -124,6 +125,49 @@ set listchars=tab:▸\ ,eol:¬
 "  autocmd bufwritepost $HOME/.vimrc source $HOME/.vim/vimrc
 "endif
 
+function! MakeRspecFileIfMissing()
+ruby << EOF
+  class MakesRspecFileIfMissing
+    def self.for(buffer)
+      if spec_file?(buffer) || already_exists?(spec_for_buffer(buffer))
+        puts "Spec already exists"
+        return
+      end
+
+      # puts "going to make #{directory_for_spec(buffer)}"
+      # puts "going to make #{spec_for_buffer(buffer)}"
+      system 'mkdir', '-p', directory_for_spec(buffer)
+      File.open(spec_for_buffer(buffer), File::WRONLY|File::CREAT|File::EXCL) do |file|
+        file.write "require 'spec_helper'"
+      end
+    end
+
+    private
+    def self.spec_file?(file)
+      file.match(/.*_spec.rb$/)
+    end
+
+    def self.already_exists?(b)
+      File.exists?(b)
+    end
+
+    def self.spec_for_buffer(b)
+      spec_buffer = b.sub('/app/', '/spec/')
+      spec_buffer.sub!('/lib/', '/spec/lib/')
+      spec_buffer.sub!('.rb', '_spec.rb')
+      return spec_buffer
+    end
+
+    def self.directory_for_spec(b)
+      File.dirname(self.spec_for_buffer(b))
+    end
+  end
+  buffer = VIM::Buffer.current.name
+  MakesRspecFileIfMissing.for(buffer)
+EOF
+endfunction
+map <leader>s :call MakeRspecFileIfMissing()<CR> :A<CR>
+map <leader>S :call MakeRspecFileIfMissing()<CR> :AT<CR>
 
 """""""" NERDTree:
 map <leader>dc :NERDTreeClose<cr>
