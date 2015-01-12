@@ -186,3 +186,7 @@ let NERDTreeShowHidden = 1
 let NERDTreeHijackNetrw = 1
 let NERDTreeIgnore=['\.$', '\~$']
 
+""""""" Vimwiki
+let wiki_1 = {}
+let wiki_1.path = '~/Dropbox/vimwiki'
+let g:vimwiki_list = [wiki_1]
