@@ -189,4 +189,8 @@ let NERDTreeIgnore=['\.$', '\~$']
 """"""" Vimwiki
 let wiki_1 = {}
 let wiki_1.path = '~/Dropbox/vimwiki'
-let g:vimwiki_list = [wiki_1]
+let wiki_2 = {}
+let wiki_2.path = '~/Dropbox/vimwikimd'
+let wiki_2.syntax = 'markdown'
+let wiki_2.ext = '.md'
+let g:vimwiki_list = [wiki_1, wiki_2]
